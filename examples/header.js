@@ -21,7 +21,7 @@ const pages = [
   ['require-auth.html', 'Require Login'],
   ['api-calls.html', 'API Calls'],
   ['sub-routes.html', 'Sub-Routes'],
-  ['https://github.com/byuweb/byu-browser-oauth-implicit', 'GitHub <i class="fab fa-github"></i>'],
+  ['https://github.com/byuweb/byu-browser-oauth-pkce', 'GitHub <i class="fab fa-github"></i>'],
 ];
 
 const branch = 'debug-log';
@@ -35,7 +35,7 @@ export function enhanceHeader(page) {
   }).join('\n');
 
   const srcLink = document.createElement('a');
-  srcLink.href = `https://github.com/byuweb/byu-browser-oauth-implicit/blob/${branch}/examples/${page}`;
+  srcLink.href = `https://github.com/byuweb/byu-browser-oauth-pkce/blob/${branch}/examples/${page}`;
   srcLink.slot = 'actions';
   srcLink.target = '_blank';
   srcLink.innerHTML = '<i class="fas fa-code"></i> View Source';

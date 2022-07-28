@@ -4,8 +4,8 @@ import nodeResolve from 'rollup-plugin-node-resolve';
 import mini from 'rollup-plugin-babel-minify';
 import { plugin as analyze } from 'rollup-plugin-analyzer'
 
-const input = 'src/implicit-grant.js';
-const out = 'dist/implicit-grant';
+const input = 'src/pkce-grant.js';
+const out = 'dist/pkce-grant';
 
 function plugins(...extras) {
   return [babel(), cjs(), nodeResolve({preferBuiltins: false}), ...extras];
@@ -35,7 +35,7 @@ export default [
     output: {
       file: `${out}.nomodule.js`,
       format: 'iife',
-      name: 'BYU.oauth.implicit',
+      name: 'BYU.oauth.pkce',
       sourcemap: true,
     },
     plugins: plugins(),
@@ -45,7 +45,7 @@ export default [
     output: {
       file: `${out}.nomodule.min.js`,
       format: 'iife',
-      name: 'BYU.oauth.implicit',
+      name: 'BYU.oauth.pkce',
       sourcemap: true,
     },
     plugins: plugins(mini()),

@@ -19,7 +19,7 @@
 
 import sinonChai from '../node_modules/sinon-chai/lib/sinon-chai.js';
 import chaiPromise from '../node_modules/chai-as-promised/lib/chai-as-promised.js';
-import {configure, DEFAULT_ISSUER} from "../src/implicit-grant.js";
+import {configure, DEFAULT_ISSUER} from "../src/pkce-grant.js";
 import {__forceShutdown} from "../src/provider.js";
 
 chai.use(sinonChai);
@@ -27,7 +27,7 @@ chai.use(chaiPromise);
 
 const fakeUrl = 'https://example.com/spa';
 
-describe('implicit-grant#configure', () => {
+describe('pkce-grant#configure', () => {
 
   describe('sets sane defaults', async () => {
     let p;

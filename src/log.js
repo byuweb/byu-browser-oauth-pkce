@@ -35,7 +35,7 @@ function logf(level, format, ...args) {
     return;
   }
   level.run(
-    `[byu-browser-oauth-implicit] [${level.name}] (${getFormattedTime()}) ${format}`,
+    `[byu-browser-oauth-pkce] [${level.name}] (${getFormattedTime()}) ${format}`,
     ...args
   );
 }
@@ -45,7 +45,7 @@ function log(level, ...args) {
     return;
   }
   level.run(
-    "[byu-browser-oauth-implicit]",
+    "[byu-browser-oauth-pkce]",
     `[${level.name}]`,
     `(${getFormattedTime()})`,
     ...args

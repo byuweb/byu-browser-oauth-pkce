@@ -1,9 +1,9 @@
 {
-  "name": "@byuweb/browser-oauth-implicit",
+  "name": "@byuweb/browser-oauth-pkce",
   "version": "1.3.1",
-  "description": "Implicit grant provider for BYU browser oauth",
-  "main": "dist/implicit-grant.js",
-  "repository": "git@github.com:byuweb/byu-browser-oauth-implicit.git",
+  "description": "PKCE grant provider for BYU browser oauth",
+  "main": "dist/pkce-grant.js",
+  "repository": "git@github.com:byuweb/byu-browser-oauth-pkce.git",
   "author": "BYU Office of Information Technology",
   "contributors": [
     "Glen Sawyer <glen_sawyer@byu.edu>",

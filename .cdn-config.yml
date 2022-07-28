@@ -1,12 +1,12 @@
 ---
-name: BYU Browser OAuth Implicit Grant
-description: BYU Implicit grant implementation
+name: BYU Browser OAuth PKCE Grant
+description: BYU PKCE grant implementation
 resources:
   - src: dist/**
     dest: ./
 entrypoints:
-  implicit-grant.js: 'ES Module - implicit grant client'
-  implicit-grant.min.js: 'Minified - ES Module - implicit grant client'
-  implicit-grant.nomodule.js: 'Transpiled implicit grant client'
-  implicit-grant.nomodule.min.js: 'Minfied - Transpiled implicit grant client'
-docs: https://github.com/byuweb/byu-browser-oauth-implicit
+  pkce-grant.js: 'ES Module - PKCE grant client'
+  pkce-grant.min.js: 'Minified - ES Module - PKCE grant client'
+  pkce-grant.nomodule.js: 'Transpiled PKCE grant client'
+  pkce-grant.nomodule.min.js: 'Minfied - Transpiled PKCE grant client'
+docs: https://github.com/byuweb/byu-browser-oauth-pkce

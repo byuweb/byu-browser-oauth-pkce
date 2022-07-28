@@ -1,26 +1,22 @@
-# byu-browser-oauth-implicit
-OAuth Implicit Grant provider for [byu-browser-oauth](https://github.com/byuweb/byu-browser-oauth).
+# byu-browser-oauth-pkce
+OAuth PKCE Grant provider for [byu-browser-oauth](https://github.com/byuweb/byu-browser-oauth).
 
-For questions or issues, try the [issue tracker](https://github.com/byuweb/byu-browser-oauth-implicit/issues)
+For questions or issues, try the [issue tracker](https://github.com/byuweb/byu-browser-oauth-pkce/issues)
 or the [Web Community Slack](https://byuweb.slack.com).
 
 # Usage
 
-## About OAuth Implicit Grant flow
+## About OAuth PKCE Grant flow
 
 In a normal OAuth authentication flow, the client calls the authentication server
 with a **client id** and a **client secret**, which are roughly analagous to a username and password.
 When working with distributed clients, such as Javascript-based browser applications, we can't use 
 the client secret, as that would expose it to the world and allow anyone to make calls as our application.
 
-Implicit Grant aims to solve this problem by using your application's URL instead of the secret. The theory
+PKCE Grant aims to solve this problem by using your application's URL instead of the secret. The theory
 is that, because URLs are guaranteed to be unique, no other application can impersonate yours.
 
-When you register your application with the OAuth server, you must provide a 'callback URL'. Due to
-limitations with BYU's current OAuth server, each application can only having one callback URL, meaning
-that if you want to have multiple urls for different environments (for example, 
-production, non-production, and local development), you must create multiple applications, each one
-of which must be subscribed to any APIs you want to call and will have a unique client ID. Note that
+When you register your application with the OAuth server, you must provide a 'callback URL'. Note that
 this does NOT mean that you must register every possible URL in your application - you just need to
 register one path in your application that the OAuth server will send users to after logging them in.
 Generally, this is the root URL of your application, but you can use any other URL that is unique to 
@@ -34,15 +30,10 @@ For each environment in your application (prod, nonprod, local, etc.), you must 
 
 1. [Create an application](https://developer.byu.edu/docs/consume-api/create-application)
 2. [Generate keys](https://developer.byu.edu/docs/consume-api/generate-keys) (even though you only need the client ID.)
-3. [Subscribe to the OpenID User Info Service](https://api.byu.edu/store/apis/info?name=OpenID-Userinfo&version=v1&provider=BYU/jmooreoa&)
-    (steps 2 and 3 of [this tutorial](https://developer.byu.edu/docs/consume-api/subscribe-api))
     
-If you wish for your application to make OAuth-protected calls to any other APIs, you must repeat
-the subscription step for each API you wish to call.
+## Using PKCE Grant in your application
 
-## Using Implicit Grant in your application
-
-The Implicit Grant OAuth provider is available from the Web Community CDN. It is preferred that
+The PKCE Grant OAuth provider is available from the Web Community CDN. It is preferred that
 you not bundle the provider into your application, so that you can benefit from updates
 to the provider (including security updates) without changing your application.  The Web Community CDN
 is built to be fast and efficient, and serves millions of requests reliably.
@@ -61,9 +52,9 @@ it in your `<head>`.
 However you import it, the Javascript you use to initialize the provider will be similar:
 
 ```js
-import * as implicit from 'https://cdn.byu.edu/browser-oauth-implicit/latest/implicit-grant.min.js';
+import * as pkce from 'https://cdn.byu.edu/browser-oauth-pkce/latest/pkce-grant.min.js';
 
-implicit.configure({
+pkce.configure({
   // your configuration here (see below) 
 });
 ```
@@ -84,6 +75,7 @@ callbackUrl | URL String | Current URL | The callback URL registered to your app
 autoRefreshOnTimeout | Boolean | false | Whether to try to automatically refresh the user's session when it expires
 logoutRedirect | URL String | Current URL | Where the user's browser should redirect after completing logout process
 issuer | URL String | https://api.byu.edu | The OAuth issuer to use. Do not change this unless you know what you are doing.
+baseUrl | URL String | https://api.byu.edu | The base URL for authentication. Use "https://api-sandbox.byu.edu" for Sandbox 
 
 ```js
 const config = {
@@ -152,9 +144,9 @@ parameters are ignored.
 ```html
 <head>
     <script type="module">
-        import * as implicit from 'https://cdn.byu.edu/browser-oauth-implicit/latest/implicit-grant.min.js';
+        import * as pkce from 'https://cdn.byu.edu/browser-oauth-pkce/latest/pkce-grant.min.js';
 
-        implicit.configure({
+        pkce.configure({
             'https://my-app.byu.edu': { clientId: '{production key}' },
             'https://stg.my-app.byu.edu': { clientId: '{stage key}' },
             'http://localhost:8080': { clientId: '{local development key}' }
@@ -173,7 +165,7 @@ For detailed, authoritative documentation, visit [https://github.com/byuweb/byu-
 
 ## Installing
 
-Unlike the implicit grant provider, the AuthenticationObserver API is installed from NPM:
+Unlike the PKCE grant provider, the AuthenticationObserver API is installed from NPM:
 
 ```shell script
 npm install --save @byuweb/browser-oauth
@@ -268,7 +260,7 @@ call `disconnect()` on `AuthenticationObserver`.
 # Debugging
 
 To turn on debug logging, add the following Javascript snippet before you initialize the
-implicit grant provider:
+PKCE grant provider:
 
 ```js
 (window.byuOAuth = window.byuOAuth || {}).logging = 'debug';

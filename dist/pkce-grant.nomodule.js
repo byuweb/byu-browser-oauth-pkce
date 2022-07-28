@@ -1,6 +1,6 @@
 this.BYU = this.BYU || {};
 this.BYU.oauth = this.BYU.oauth || {};
-this.BYU.oauth.implicit = (function (exports) {
+this.BYU.oauth.pkce = (function (exports) {
   'use strict';
 
   const LEVEL_TRACE = {
@@ -46,7 +46,7 @@ this.BYU.oauth.implicit = (function (exports) {
       return;
     }
 
-    level.run(`[byu-browser-oauth-implicit] [${level.name}] (${getFormattedTime()}) ${format}`, ...args);
+    level.run(`[byu-browser-oauth-pkce] [${level.name}] (${getFormattedTime()}) ${format}`, ...args);
   }
 
   function log(level, ...args) {
@@ -54,7 +54,7 @@ this.BYU.oauth.implicit = (function (exports) {
       return;
     }
 
-    level.run("[byu-browser-oauth-implicit]", `[${level.name}]`, `(${getFormattedTime()})`, ...args);
+    level.run("[byu-browser-oauth-pkce]", `[${level.name}]`, `(${getFormattedTime()})`, ...args);
   }
 
   function getFormattedTime() {
@@ -1266,13 +1266,13 @@ this.BYU.oauth.implicit = (function (exports) {
   const sha256$1 = sha256.sha256;
   let SINGLETON_INSTANCE;
   let BASE_URL;
-  const CHILD_IFRAME_ID = 'byu-oauth-implicit-grant-refresh-iframe';
+  const CHILD_IFRAME_ID = 'byu-oauth-pkce-grant-refresh-iframe';
   const STORED_STATE_LIFETIME = 5 * 60 * 1000; // 5 minutes (in milliseconds)
 
   const EXPIRATION_BUFFER = 5 * 60 + 5; // 5 minutes + 5 seconds (in seconds)
 
-  const IG_STATE_AUTO_REFRESH_FAILED = 'implicit-grant-auto-refresh-failed';
-  class ImplicitGrantProvider {
+  const IG_STATE_AUTO_REFRESH_FAILED = 'pkce-grant-auto-refresh-failed';
+  class PKCEGrantProvider {
     constructor(config, window, document, storageHandler = new StorageHandler()) {
       debug('initializing provider with config', config);
       this.config = config;
@@ -1604,7 +1604,7 @@ this.BYU.oauth.implicit = (function (exports) {
       const casLogoutUrl = 'https://cas.byu.edu/cas/logout?service=' + encodeURIComponent(logoutRedirect);
       const logoutUrl = `${BASE_URL}/logout?redirect_url=` + encodeURIComponent(casLogoutUrl);
       info('logging out by redirecting to', logoutUrl);
-      this.window.location = logoutUrl; //TODO: WSO2 Identity Server 5.1 allows us to revoke implicit tokens.  Once that's done, we'll need to do this.
+      this.window.location = logoutUrl; //TODO: Update this to work with Tyk.
       // const url = `https://api.byu.edu/revoke`;
       // const form = new URLSearchParams();
       // form.set('token', store.token.bearer);
@@ -2117,7 +2117,7 @@ this.BYU.oauth.implicit = (function (exports) {
   function ensureOnlyInstance(obj) {
     if (SINGLETON_INSTANCE) {
       const trace = SINGLETON_INSTANCE.___startupTrace;
-      throw new Error('There is already an instance of byu-oauth-implicit running!  Please call `#shutdown()` on that instance before starting a new one. Instance was started at:\n' + trace);
+      throw new Error('There is already an instance of byu-oauth-pkce running!  Please call `#shutdown()` on that instance before starting a new one. Instance was started at:\n' + trace);
     }
 
     obj.___startupTrace = new Error().stack;
@@ -2145,9 +2145,9 @@ this.BYU.oauth.implicit = (function (exports) {
    */
   const DEFAULT_ISSUER = 'https://api.byu.edu';
   const DEFAULT_BASE_URL = 'https://api.byu.edu';
-  const GLOBAL_CONFIG_KEY = 'byu-oauth-implicit-config';
+  const GLOBAL_CONFIG_KEY = 'byu-oauth-pkce-config';
   /**
-   * @typedef {} ImplicitConfig
+   * @typedef {} PKCEConfig
    * @prop {string} clientId
    * @prop {?string} issuer
    * @prop {?string} baseUrl
@@ -2156,7 +2156,7 @@ this.BYU.oauth.implicit = (function (exports) {
    */
 
   /**
-   * @param {ImplicitConfig|ImplicitConfig[]|undefined} cfgOrRules
+   * @param {PKCEConfig|PKCEConfig[]|undefined} cfgOrRules
    * @param location
    */
 
@@ -2174,7 +2174,7 @@ this.BYU.oauth.implicit = (function (exports) {
       throw new Error('clientId must be specified in config');
     }
 
-    const provider = new ImplicitGrantProvider(config, window, document);
+    const provider = new PKCEGrantProvider(config, window, document);
     return provider.startup();
   }
 
@@ -2220,4 +2220,4 @@ this.BYU.oauth.implicit = (function (exports) {
   return exports;
 
 }({}));
-//# sourceMappingURL=implicit-grant.nomodule.js.map
+//# sourceMappingURL=pkce-grant.nomodule.js.map

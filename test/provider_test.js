@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Brigham Young University
+ * Copyright 2022 Brigham Young University
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {ImplicitGrantProvider} from "../src/provider";
+import {PKCEGrantProvider} from "../src/provider";
 import * as authn from '../node_modules/@byuweb/browser-oauth/constants.js';
 
 import sinonChai from '../node_modules/sinon-chai/lib/sinon-chai.js';
@@ -25,7 +25,7 @@ chai.use(chaiAsPromised);
 const fakeUrl = 'https://example.com/spa';
 const fakeOrigin = (new URL(fakeUrl)).origin
 
-describe('implicit grant provider', function () {
+describe('PKCE grant provider', function () {
   let config;
   let document;
   let window;
@@ -84,7 +84,7 @@ describe('implicit grant provider', function () {
       saveSessionState: sinon.stub(),
       clearSessionState: sinon.stub(),
     };
-    p = new ImplicitGrantProvider(config, window, document, storage);
+    p = new PKCEGrantProvider(config, window, document, storage);
     tempConsole = {
       info: console.info,
       log: console.log,
@@ -116,7 +116,7 @@ describe('implicit grant provider', function () {
     it('#startup() fails if a provider is already started', async () => {
       await p.startup();
 
-      second = new ImplicitGrantProvider(config, window, document, storage);
+      second = new PKCEGrantProvider(config, window, document, storage);
       return expect(second.startup()).to.be.rejected;
     });
 
@@ -124,7 +124,7 @@ describe('implicit grant provider', function () {
       await p.startup();
       p.shutdown();
 
-      second = new ImplicitGrantProvider(config, window, document, storage);
+      second = new PKCEGrantProvider(config, window, document, storage);
       return expect(second.startup()).to.be.fulfilled;
     });
 

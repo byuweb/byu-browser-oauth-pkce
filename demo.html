@@ -4,12 +4,12 @@
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Implicit Grant Test</title>
+  <title>PKCE Grant Test</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <script>
     (window.byuOAuth = window.byuOAuth || {}).logging = 'debug';
-    window['byu-oauth-implicit-config'] = {
+    window['byu-oauth-pkce-config'] = {
       clientId: 'cSZPaC0Kvjfq1o0fwFTsXmP69lca',
       // forceLogin: true,
       // mode: 'popup',
@@ -18,13 +18,13 @@
   </script>
 
   <script type="module">
-    import * as implicit from './dist/implicit-grant.js';
+    import * as pkce from './dist/pkce-grant.js';
 
-    implicit.configure();
+    pkce.configure();
   </script>
-  <script nomodule src="./dist/implicit-grant.nomodule.js"></script>
+  <script nomodule src="./dist/pkce-grant.nomodule.js"></script>
   <script nomodule>
-    BYU.oauth.implicit.configure();
+    BYU.oauth.pkce.configure();
   </script>
 
   <style>

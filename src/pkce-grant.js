@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import { IG_STATE_AUTO_REFRESH_FAILED, ImplicitGrantProvider } from "./provider.js";
+import { IG_STATE_AUTO_REFRESH_FAILED, PKCEGrantProvider } from "./provider.js";
 export { IG_STATE_AUTO_REFRESH_FAILED }
 
 export const DEFAULT_ISSUER = 'https://api.byu.edu';
 export const DEFAULT_BASE_URL = 'https://api.byu.edu';
 
-export const GLOBAL_CONFIG_KEY = 'byu-oauth-implicit-config';
+export const GLOBAL_CONFIG_KEY = 'byu-oauth-pkce-config';
 
 /**
- * @typedef {} ImplicitConfig
+ * @typedef {} PKCEConfig
  * @prop {string} clientId
  * @prop {?string} issuer
  * @prop {?string} baseUrl
@@ -32,7 +32,7 @@ export const GLOBAL_CONFIG_KEY = 'byu-oauth-implicit-config';
  */
 
 /**
- * @param {ImplicitConfig|ImplicitConfig[]|undefined} cfgOrRules
+ * @param {PKCEConfig|PKCEConfig[]|undefined} cfgOrRules
  * @param location
  */
 export async function configure(cfgOrRules, location = window.location) {
@@ -49,7 +49,7 @@ export async function configure(cfgOrRules, location = window.location) {
   if (!config.clientId) {
     throw new Error('clientId must be specified in config');
   }
-  const provider = new ImplicitGrantProvider(config, window, document);
+  const provider = new PKCEGrantProvider(config, window, document);
 
   return provider.startup();
 }

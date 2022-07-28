@@ -28,12 +28,12 @@ const sha256 = sha256Lib.sha256
 let SINGLETON_INSTANCE;
 let BASE_URL;
 
-const CHILD_IFRAME_ID = 'byu-oauth-implicit-grant-refresh-iframe'
+const CHILD_IFRAME_ID = 'byu-oauth-pkce-grant-refresh-iframe'
 const STORED_STATE_LIFETIME = 5 * 60 * 1000; // 5 minutes (in milliseconds)
 const EXPIRATION_BUFFER = (5 * 60) + 5; // 5 minutes + 5 seconds (in seconds)
-export const IG_STATE_AUTO_REFRESH_FAILED = 'implicit-grant-auto-refresh-failed'
+export const IG_STATE_AUTO_REFRESH_FAILED = 'pkce-grant-auto-refresh-failed'
 
-export class ImplicitGrantProvider {
+export class PKCEGrantProvider {
   constructor(config, window, document, storageHandler = new StorageHandler()) {
     log.debug('initializing provider with config', config);
     this.config = config;
@@ -313,7 +313,7 @@ export class ImplicitGrantProvider {
     log.info('logging out by redirecting to', logoutUrl);
     this.window.location = logoutUrl;
 
-    //TODO: WSO2 Identity Server 5.1 allows us to revoke implicit tokens.  Once that's done, we'll need to do this.
+    //TODO: Update this to work with Tyk.
     // const url = `https://api.byu.edu/revoke`;
 
     // const form = new URLSearchParams();
@@ -780,7 +780,7 @@ function redactBearerToken(b) {
 function ensureOnlyInstance(obj) {
   if (SINGLETON_INSTANCE) {
     const trace = SINGLETON_INSTANCE.___startupTrace;
-    throw new Error('There is already an instance of byu-oauth-implicit running!  Please call `#shutdown()` on that instance before starting a new one. Instance was started at:\n' + trace);
+    throw new Error('There is already an instance of byu-oauth-pkce running!  Please call `#shutdown()` on that instance before starting a new one. Instance was started at:\n' + trace);
   }
   obj.___startupTrace = new Error().stack;
   SINGLETON_INSTANCE = obj;
