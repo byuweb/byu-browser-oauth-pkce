@@ -59,6 +59,7 @@ describe('PKCE grant provider', function () {
     config = {
       clientId: 'aabbcc',
       callbackUrl: fakeUrl,
+      baseUrl: 'https://api.byu.edu',
     };
     document = {
       addEventListener: sinon.stub(),
