@@ -236,7 +236,7 @@ If you application requires that users always be logged in, add this after insta
 your `AuthenticationObserver`:
 
 ```js
-import { AuthenticationObserver, login } from '@byuweb/browser-oauth';
+import { AuthenticationObserver, login, STATE_UNAUTHENTICATED } from '@byuweb/browser-oauth';
 
 const observer = new AuthenticationObserver(({state, token, user, error}) => {
   // React to the change in state
@@ -245,7 +245,10 @@ const observer = new AuthenticationObserver(({state, token, user, error}) => {
   } else if (token && user) {
     // User is logged-in - start loading data or taking other actions
   } else {
-    login();
+    if (state == STATE_UNAUTHENTICATED) {
+      // User is not logged in AND authentication process has NOT already begun
+      login();
+    }
   }
 });
 ```
